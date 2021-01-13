@@ -1,1 +1,354 @@
-## 欢迎到这里来 这里是晨希导航
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin" />
+    <meta name="description" content="背景： 本文以ubuntu服务器为例来说明几种设置域名跳转的情况 设置域名301跳转的几种途径： 1、域名解析处设置显性URL 比如解析处可设置a.com显性解析到b.com 2、nginx配置文件处" />
+    <meta property="og:description" content="背景： 本文以ubuntu服务器为例来说明几种设置域名跳转的情况 设置域名301跳转的几种途径： 1、域名解析处设置显性URL 比如解析处可设置a.com显性解析到b.com 2、nginx配置文件处" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>设置域名跳转的几种方式 - 芹溪 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=R2wBwmwSMG0Sqiw8GFSVjHT4Payg_JFAn51R8XcuvN0" />
+    <link id="MainCss" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip.min.css?v=eoZATbPKwJCL5eWVDTQIYC6CIxJPcFz191dkzN2tSyQ" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/dadonggg/custom.css?v=mhOVQrv6F0DN9zV2P2i80hGqt/U=" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.min.css?v=t5FCVTL_2MZiNqvKmasbSikueC5tceZurHnf1q4M-5Y" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/dadonggg/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/dadonggg/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/dadonggg/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 378260;
+        var currentBlogApp = 'dadonggg';
+        var cb_enable_mathjax = false;
+        var isLogined = true;
+        var isBlogOwner = false;
+        var skinName = 'darkgreentrip';
+        var visitorUserId = 'a4d13580-d0cb-4fa9-aa8e-08d8ae5f7194';
+    </script>
+        <script>
+            var currentPostDateAdded = '2019-06-23 12:16';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=V0BbkkQE24zt1D_4TRGfRwcCB1E3YoBpH5YOp1qKoxA"></script>
+    
+    
+    
+</head>
+<body class="no-navbar">
+    <a name="top"></a>
+        <div id="bannerbar" class="bannerbar-mobile formobile">
+            <a href="https://developer.aliyun.com/learning/trainingcamp/mysql/1?utm_content=g_1000228441" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'aliyun-mobile-bannerbar')">
+                <img src="https://img2020.cnblogs.com/blog/35695/202101/35695-20210112114413141-1224242198.png" alt="" />
+            </a>
+        </div>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a></li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=oS4PkibyMjZ9rGD5XAcLt99uW_s76Javy2up4dbnZNY" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" onclick="logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        
+        
+        
+        <title>打赏</title>
+    </head>
+    <script>
+        window.tctipConfig = {
+            staticPrefix: "http://static.tctip.com",
+            buttonImageId: 5,
+            //zanzhu--博客园右边出现"赞助"二字
+            //buttonTip: "zanzhu",
+            //dashang--博客园右边出现"打赏"二字
+            buttonTip: "dashang",
+            list: {
+                alipay: {
+                    //修改一：修改支付宝收款码地址
+                    qrimg: "https://files.cnblogs.com/files/mengfangui/zgb.bmp"
+                },
+                weixin: {
+                    //修改二：修改微信收款码地址
+                    qrimg: "https://files.cnblogs.com/files/mengfangui/WechatIMG364.bmp"
+                },
+            }
+        };
+    </script>
+    <script src="http://static.tctip.com/js/tctip.min.js" defer></script>
+
+    <body>
+
+</html>
+    </div>
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/dadonggg/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/dadonggg/">芹溪</a>
+</h1>
+<h2>风华是一指流砂，苍老是一段年华</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/dadonggg/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E8%8A%B9%E6%BA%AA">
+联系</a></li>
+<li>
+
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<span id="stats_post_count">随笔 - 213&nbsp; </span>
+<span id="stats_article_count">文章 - 5&nbsp; </span>
+<span id="stats-comment_count">评论 - 92</span>
+
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/dadonggg/p/11071090.html">
+    <span>设置域名跳转的几种方式</span>
+    
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body">
+    <p class="md-end-block md-p"><span class="md-plain">背景：</span></p>
+<p class="md-end-block md-p"><span class="md-plain">本文以ubuntu服务器为例来说明几种设置域名跳转的情况</span></p>
+<p class="md-end-block md-p"><span class="md-plain">设置域名301跳转的几种途径：</span></p>
+<p class="md-end-block md-p"><span class="md-plain">1、域名解析处设置显性URL</span></p>
+<p class="md-end-block md-p"><span class="md-plain">比如解析处可设置a.com显性解析到b.com</span></p>
+<p class="md-end-block md-p md-focus">&nbsp;</p>
+<p class="md-end-block md-p"><span class="md-plain">2、nginx配置文件处跳转。</span></p>
+<p class="md-end-block md-p"><span class="md-plain">a、proxy跳转</span></p>
+<p class="md-end-block md-p"><span class="md-plain">/etc/nginx/conf.d下面设置跳转</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">server {
+  listen </span><span style="color: rgba(128, 0, 128, 1)">80</span><span style="color: rgba(0, 0, 0, 1)">;
+  server_name a.com;
+​
+  location </span>/<span style="color: rgba(0, 0, 0, 1)"> {
+                proxy_pass http:</span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">127.0.0.1:9081;</span>
+<span style="color: rgba(0, 0, 0, 1)">    autoindex on;
+    include conf.d</span>/<span style="color: rgba(0, 0, 0, 1)">proxy.conf;
+                deny all;
+  }
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p class="md-end-block md-p"><span class="md-plain">b、rewrite跳转</span></p>
+<p class="md-end-block md-p"><span class="md-plain">/etc/nginx/sites-enabled路径下设置</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">server {
+    listen </span><span style="color: rgba(128, 0, 128, 1)">80</span><span style="color: rgba(0, 0, 0, 1)">;
+    server_name a.com c.com;
+........
+rewrite </span>^(.*) https:<span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">b.com$1 permanent;</span>
+}</pre>
+</div>
+<p>尤其注意：如果此处server处的域名有别名，那么也会跳转；比如上述c.com也会跳转到b.com,即使没有配置其他的跳转。</p>
+<p class="md-end-block md-p"><span class="md-plain">3、程序中设置跳转</span></p>
+<p class="md-end-block md-p"><span class="md-plain">比如PHP程序中就可以设置这种域名跳转。</span></p>
+<p class="md-end-block md-p">&nbsp;</p>
+<p class="md-end-block md-p">&nbsp;</p>
+<p class="md-end-block md-p"><span class="md-plain">扩展：阿里云SLB端口转发</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">阿里云SLB端口转发
+
+如果服务只是一个后端接口，没有nginx配置前端项目，可以通过阿里云的SLB做端口的转发
+
+比如一个java接口端口是9900，可以配置http和https域名访问</span></pre>
+</div>
+<p><img src="https://img2018.cnblogs.com/blog/1209537/201907/1209537-20190703212043739-2079476714.png" alt=""></p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">上述端口80转发到9900端口，这么访问时只需要使用a.test.com访问项目即可
+
+如果需要配置https，则可以使用443转发到9900，注意https中健康检查的路径一定要是一个能够返回2XX或者3XX的URL。如果健康检查通过，那么直接访问https:</span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">a.test.com即可</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2019-06-23 00:16</span>&nbsp;
+<a href="https://www.cnblogs.com/dadonggg/">芹溪</a>&nbsp;
+阅读(<span id="post_view_count">5019</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=11071090" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(11071090);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 378260, cb_blogApp = 'dadonggg', cb_blogUserGuid = '3051ffda-25c7-4e0e-4aa0-08d49c352df3';
+    var cb_entryId = 11071090, cb_entryCreatedDate = '2019-06-23 00:16', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_kb"></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+   </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2021 芹溪
+<br /><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+</body>
+</html>
